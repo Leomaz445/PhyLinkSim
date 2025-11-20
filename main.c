@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include "link_sim.h"
 #include "waveform.h"
+#include "channel.h"
 
 int main(void) {
     link_context_t ctx;
@@ -24,6 +25,23 @@ int main(void) {
             return 1;
                                    }
         printf("Waveform written to link_waveform.csv\n");
+
+        channel_profile_t profile = {
+            .length_m = 2.0,
+            .att_db_per_m = 3.2,
+            .next_db_per_m = 16.0,
+            .fext_db_per_m = 22.0,
+        };
+
+        if (generate_channel_transfer(&profile,
+                                      0.1,
+                                      12.5,
+                                      0.1,
+                                      "channel_transfer.csv") != 0) {
+            fprintf(stderr, "failed to generate channel transfer characteristic\n");
+            return 1;
+        }
+        printf("Channel transfer characteristic written to channel_transfer.csv\n");
 
     } else {
         printf("Link failed, final state = %d, BER = %g\n",
