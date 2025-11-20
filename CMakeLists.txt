@@ -7,4 +7,8 @@ add_executable(PhyLinkSim main.c
         link_sim.h
         link_sim.c
         waveform.h
-        waveform.c)
+        waveform.c
+        channel.h
+        channel.c)
+
+target_link_libraries(PhyLinkSim m)
